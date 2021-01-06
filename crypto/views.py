@@ -1,16 +1,18 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.utils.timezone import make_aware
+from datetime import datetime
 from pycoingecko import CoinGeckoAPI
 
 def ticker(request):
     cg = CoinGeckoAPI()
-    context = cg.get_price(ids=['bitcoin', 'ripple', 'ethereum'], vs_currencies=["php","usd","eur"])
-    return JsonResponse({'context':context})
+    content = cg.get_price(ids=['bitcoin', 'ripple', 'ethereum'], vs_currencies=["php","usd","eur"])
+    return render(request, 'crypto/ticker.html', {'content':content})
 
 
-def historical(request):
+def interval_data(request):
     cg = CoinGeckoAPI()
-    id = request.POST.get('id')
-    date_request = request.POST.get('date_request')
-    
+    content = cg.get_coin_market_chart_range_by_id(id='bitcoin', vs_currency='usd', from_timestamp='1609718400', to_timestamp='1609804800')
+    #for date_time, price in content['prices']:
+        #date_time = make_aware(datetime.fromtimestamp(item))
+    return render(request, 'crypto/historical.html', {'content':content})
     
