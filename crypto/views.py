@@ -3,7 +3,8 @@ from django.utils.timezone import make_aware
 from datetime import datetime
 import datetime
 from pycoingecko import CoinGeckoAPI
-from crypto.forms import CryptoDataForm
+import schedule
+import time
 
 def ticker(request):
     cg = CoinGeckoAPI()
