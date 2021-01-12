@@ -8,7 +8,7 @@ import time
 
 def ticker(request):
     cg = CoinGeckoAPI()
-
+    content = cg.get_price(ids=['bitcoin', 'ripple', 'ethereum'], vs_currencies=["php","usd","eur"])
     return render(request, 'crypto/ticker.html', {'content':content})
 
 
